@@ -1,8 +1,9 @@
 import { LightningElement, wire } from 'lwc';
 
 import { reduceErrors } from 'c/ldsUtils';
+import Utils from 'c/utils';
 
-import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
 import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
 import SELECTED_STUDENT_CHANNEL from '@salesforce/messageChannel/SelectedStudentChannel__c';
 import { NavigationMixin } from 'lightning/navigation';
@@ -42,16 +43,16 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 	}
 
 	get name() {
-		return this._getDisplayValue(this.wiredStudent.data, FIELD_Name);
+		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Name);
 	}
 	get description() {
-		return this._getDisplayValue(this.wiredStudent.data, FIELD_Description);
+		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Description);
 	}
 	get phone() {
-		return this._getDisplayValue(this.wiredStudent.data, FIELD_Phone);
+		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Phone);
 	}
 	get email() {
-		return this._getDisplayValue(this.wiredStudent.data, FIELD_Email);
+		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Email);
 	}
 	
 	get errorMessages() {
@@ -81,10 +82,6 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 				actionName: 'view'
 			},
 		});
-	}
-	
-	_getDisplayValue(data, field) {
-		return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data, field);
 	}
 	
 }
